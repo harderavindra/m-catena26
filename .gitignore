@@ -1,0 +1,13 @@
+# .gitignore
+.env
+storage-key.json
+node_modules/
+*.env.local
+*.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_Store
+.vercel
+.next
+.cache
