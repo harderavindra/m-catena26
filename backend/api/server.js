@@ -24,6 +24,8 @@ const allowedOrigins = [
   "https://m-catena26-f2jj-dx51g224n-harderavis-projects.vercel.app",
   "https://m-catena26-nfjuh5vhr-harderavis-projects.vercel.app",
   "https://backend-73j2qhn4o-harderavis-projects.vercel.app"
+
+  
 ];
 app.use(
   cors({
