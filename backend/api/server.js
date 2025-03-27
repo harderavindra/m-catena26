@@ -57,10 +57,21 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/profile-pic", profileRoutes);
 app.use("/api/jobs", jobRoutes);
 
+app.get("/api/test", (req, res) => {
+  res.json({
+    message: "Backend is working!",
+    environment: process.env.NODE_ENV || "development",
+    test_url: process.env.TEST_URL,
+  });
+});
+
 
 // Start Server
 const PORT = process.env.PORT || 3000;
+
 if (process.env.NODE_ENV !== "production") {
-  const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => console.log(`Local server running on port ${PORT}`));
+  console.log(`Local server running on port ${PORT}`);
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
+
+export default app;
