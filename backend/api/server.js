@@ -35,7 +35,13 @@ app.use(
   })
 );
 
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://m-catena26-f2jj.vercel.app"); // ✅ Ensure frontend origin is set
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization");
+  next();
+});
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, 
