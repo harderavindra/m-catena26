@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Create Auth Context
 const AuthContext = createContext(null);
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/auth/me", { withCredentials: true });
+        const response = await axios.get(`${API_BASE_URL}/api/auth/me`, { withCredentials: true });
         console.log("Auth Check", response.data.user)
         setUser(response.data.user);
       }  catch (error) {
@@ -32,14 +33,14 @@ export const AuthProvider = ({ children }) => {
 
   // Login function
   const login = async (email, password) => {
-    await axios.post("http://localhost:3000/api/auth/login", { email, password }, { withCredentials: true });
-    const response = await axios.get("http://localhost:3000/api/auth/me", { withCredentials: true });
+    await axios.post(`${API_BASE_URL}/api/auth/login`, { email, password }, { withCredentials: true });
+    const response = await axios.get(`${API_BASE_URL}/api/auth/me`, { withCredentials: true });
     setUser(response.data.user);
   };
 
   // Logout function
   const logout = async () => {
-    await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
+    await axios.post(`${API_BASE_URL}/api/auth/logout`, {}, { withCredentials: true });
     setUser(null);
   };
 
