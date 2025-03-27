@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRoutes from "./routes/auth.js"; // Import auth routes
-import brandTreasuryRoutes from "./routes/brandTreasuryRoutes.js"; // Import auth routes
-import masterDataRoutes from "./routes/masterDataRoutes.js"; // Import auth routes
-import uploadRoutes from './routes/uploadRoutes.js'
-import profileRoutes from './routes/profileRoutes.js'
-import jobRoutes from './routes/jobRoutes.js'
+import authRoutes from "../routes/auth.js"; // Import auth routes
+import brandTreasuryRoutes from "../routes/brandTreasuryRoutes.js"; // Import auth routes
+import masterDataRoutes from "../routes/masterDataRoutes.js"; // Import auth routes
+import uploadRoutes from '../routes/uploadRoutes.js'
+import profileRoutes from '../routes/profileRoutes.js'
+import jobRoutes from '../routes/jobRoutes.js'
 dotenv.config();
 
 const app = express();
@@ -60,4 +60,7 @@ app.use("/api/jobs", jobRoutes);
 
 // Start Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 4000;
+  app.listen(PORT, () => console.log(`Local server running on port ${PORT}`));
+}
