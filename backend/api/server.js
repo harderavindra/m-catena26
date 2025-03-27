@@ -18,9 +18,12 @@ app.use(express.json());
 app.use(cookieParser());
 // Whitelist allowed origins
 const allowedOrigins = [
-  "http://localhost:5173", 
+  "http://localhost:5173",
   "http://localhost:5174",
-  "https://m-catena26-f2jj.vercel.app" // Vercel frontend
+  "https://m-catena26-f2jj-mnczg3y4e-harderavis-projects.vercel.app",
+  "https://m-catena26-f2jj-dx51g224n-harderavis-projects.vercel.app",
+  "https://m-catena26-nfjuh5vhr-harderavis-projects.vercel.app",
+  "https://backend-73j2qhn4o-harderavis-projects.vercel.app"
 ];
 app.use(
   cors({
@@ -35,13 +38,7 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://m-catena26-f2jj.vercel.app"); // ✅ Ensure frontend origin is set
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization");
-  next();
-});
+
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI, 
