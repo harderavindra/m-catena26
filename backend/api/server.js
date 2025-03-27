@@ -14,8 +14,6 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(express.json());
-app.use(cookieParser());
 // Whitelist allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
@@ -39,6 +37,9 @@ app.use(
     credentials: true, // Allow cookies & headers like Authorization
   })
 );
+
+app.use(express.json());
+app.use(cookieParser());
 
 
 // Connect to MongoDB
