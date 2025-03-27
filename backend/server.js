@@ -17,8 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 // Whitelist allowed origins
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
-
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "http://localhost:5174",
+  "https://m-catena26-f2jj-dx51g224n-harderavis-projects.vercel.app" // Vercel frontend
+];
 app.use(
   cors({
     origin: function (origin, callback) {
