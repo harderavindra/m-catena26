@@ -20,7 +20,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173", 
   "http://localhost:5174",
-  "https://m-catena26-f2jj-dx51g224n-harderavis-projects.vercel.app" // Vercel frontend
+  "https://m-catena26-f2jj.vercel.app" // Vercel frontend
 ];
 app.use(
   cors({
