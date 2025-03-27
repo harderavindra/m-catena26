@@ -15,7 +15,7 @@ const app = express();
 
 // Middleware
 // Whitelist allowed origins
-const allowedOrigins = [
+const allowedOrigins = [ 
   "http://localhost:5173",
   "http://localhost:5174",
   "https://m-catena26-f2jj-mnczg3y4e-harderavis-projects.vercel.app",
