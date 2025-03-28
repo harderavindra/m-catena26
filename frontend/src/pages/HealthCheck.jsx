@@ -1,15 +1,23 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HealthCheck from './pages/HealthCheck';
+import React, { useState, useEffect } from 'react';
 
-function App() {
+const HealthCheck = () => {
+  const [status, setStatus] = useState("Loading...");
+
+  useEffect(() => {
+    fetch("https://m-catena-b.vercel.app/api/healthcheck", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setStatus(data.message))
+      .catch((err) => setStatus("Error: " + err.message));
+  }, []);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/healthcheck" element={<HealthCheck />} />
-      </Routes>
-    </Router>
+    <div className="p-4 text-center">
+      <h1 className="text-2xl font-bold">Backend Health Check</h1>
+      <p>Status: {status}</p>
+    </div>
   );
-}
+};
 
-export default App;
+export default HealthCheck;
