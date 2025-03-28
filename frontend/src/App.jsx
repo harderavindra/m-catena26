@@ -15,6 +15,7 @@ import BrandTreasuryList from "./pages/BrandTreasuryList";
 import JobCreate from "./pages/JobCreate";
 import JobList from "./pages/JobList";
 import JobViewPage from "./pages/JobViewPage";
+import HealthCheck from "./pages/HealthCheck";
 
 function App() {
 
