@@ -7,8 +7,8 @@ import { DESIGNATIONS, ROLES } from "../constants/enums.js";
 import { setCorsHeaders } from "../middlewares/corsMiddleware.js";
 
 export const login = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
   try {
-        setCorsHeaders(req, res); // Set CORS headers
     
     const { email, password } = req.body;
 
@@ -84,8 +84,8 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getMe = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
   try {
-        setCorsHeaders(req, res); // Set CORS headers
     
     const user = await User.findById(req.user.id).select("firstName lastNmae email role profilePic createdAt"); // Exclude password
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -97,6 +97,8 @@ export const getMe = async (req, res) => {
   }
 };
 export const logOut = (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production" });
   return res.status(200).json({ message: "Logged out successfully" });
 }
