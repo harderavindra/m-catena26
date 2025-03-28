@@ -58,6 +58,13 @@ app.get("/api/test", (req, res) => {
   });
 });
 
+app.get("/api/healthcheck", (req, res) => {
+  res.json({
+    message: "Backend is up and running!",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Start the server
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

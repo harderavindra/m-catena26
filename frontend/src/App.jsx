@@ -22,6 +22,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+        <Route path="/healthcheck" element={<HealthCheck />} />
+
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
