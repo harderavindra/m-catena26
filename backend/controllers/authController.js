@@ -4,9 +4,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 import authMiddleware from '../middlewares/authMiddleware.js'
 import { DESIGNATIONS, ROLES } from "../constants/enums.js";
+import { setCorsHeaders } from "../middlewares/corsMiddleware.js";
 
 export const login = async (req, res) => {
   try {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     const { email, password } = req.body;
 
 
@@ -42,6 +45,8 @@ export const login = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const { page = 1, limit = 10, role, designation, search } = req.query;
     console.log('page', page)
@@ -80,6 +85,8 @@ export const getAllUsers = async (req, res) => {
 
 export const getMe = async (req, res) => {
   try {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     const user = await User.findById(req.user.id).select("firstName lastNmae email role profilePic createdAt"); // Exclude password
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -96,6 +103,8 @@ export const logOut = (req, res) => {
 
 export const getUserById = async (req, res) => {
   console.log(req.params.id)
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const user = await User.findById(req.params.id).select("-password");
 
@@ -111,7 +120,9 @@ export const getUserById = async (req, res) => {
 
 
 export const updateUser = async (req, res) => {
+  
   try {
+    setCorsHeaders(req, res); // Set CORS headers
     const userId = req.params.id;
     const { firstName, lastName, contactNumber, userType, designation, role, status, location } = req.body;
 
@@ -214,6 +225,8 @@ export const resetUserPassword = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const adminId = req.user.id; // Admin ID from token
     const { id } = req.params; // Target User ID
@@ -236,6 +249,8 @@ console.log(id)
 };
 
 export const registerUser = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
 
   try {
     console.log("Incoming request body:", req.body); // 🟢 Log request body before validation

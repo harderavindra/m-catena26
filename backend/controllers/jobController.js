@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Storage } from "@google-cloud/storage";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import { setCorsHeaders } from "../middlewares/corsMiddleware.js";
 
 
 dotenv.config();
@@ -51,6 +52,9 @@ export const createJob = async (req, res) => {
 
 export const getAllJobs = async (req, res) => {
   try {
+    
+    setCorsHeaders(req, res); // Set CORS headers
+
     const jobs = await Job.find()
     .populate('decisionHistory.updatedBy', 'firstName lastName email profilePic')
     .populate({ path: 'createdBy', select: 'firstName lastName profilePic role' })
@@ -101,6 +105,8 @@ export const getAllJobs = async (req, res) => {
 
 export const getJobById = async (req, res) => {
   try {
+    setCorsHeaders(req, res); // Set CORS headers
+
     const { id } = req.params;
 
     const job = await Job.findById(id)

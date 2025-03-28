@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FiStar } from "react-icons/fi";
 import Pagination from "../components/common/Pagination";
@@ -10,10 +9,11 @@ import DropdownFilter from "../components/user/DropdownFilter";
 import { BRAND_TREASURY_DOCUMENTS, LANGUAGES } from "../utils/constants";
 import StatusMessage from "../components/common/StatusMessage";
 import MultiSelect from "../components/common/MultiSelect";
+import axiosInstance from "../utils/axiosInstance";
 
 const BrandTreasuryList = () => {
   const navigate = useNavigate();
-  
+
   const [page, setPage] = useState(1);
   const [documentType, setDocumentType] = useState("");
   const [starred, setStarred] = useState(false);
@@ -41,10 +41,12 @@ const BrandTreasuryList = () => {
 
     try {
       console.log(selectedLanguages, 'selectedLanguages')
-      const params = { page, limit: 4, documentType, starred, myDocuments, search: debouncedSearch,      languages:  selectedLanguages.join(",") 
- };
-      const { data } = await axios.get("http://localhost:3000/api/upload/", { params, withCredentials: true });
-
+      const params = {
+        page, limit: 4, documentType, starred, myDocuments, search: debouncedSearch, languages: selectedLanguages.join(",")
+      };
+      const { data } = await axiosInstance.get("/api/upload/", {
+        params, // Your query parameters
+      });
       setDocuments(data?.data || []);
       setPagination(data?.pagination || { currentPage: 1, totalPages: 1 });
     } catch (error) {
@@ -83,35 +85,35 @@ const BrandTreasuryList = () => {
 
         {/* Filters */}
         <div className={`flex justify-between ${selectedLanguages.length > 0
- ? 'pb-10':'pb-0'}`}>
-        <div className={`flex gap-4 mb-5 ${error ? "hidden" : ""}`}>
-          <SearchInput
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onClear={() => setSearch("")}
-            placeholder="Search by name (min 3 chars)"
-          />
-          <DropdownFilter
-            options={{ label: "documentType", items: documentOptions }}
-            value={documentType}
-            onChange={(e) => setDocumentType(e.target.value.toLowerCase())}
-            onClear={() => setDocumentType("")}
-          />
+          ? 'pb-10' : 'pb-0'}`}>
+          <div className={`flex gap-4 mb-5 ${error ? "hidden" : ""}`}>
+            <SearchInput
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onClear={() => setSearch("")}
+              placeholder="Search by name (min 3 chars)"
+            />
+            <DropdownFilter
+              options={{ label: "documentType", items: documentOptions }}
+              value={documentType}
+              onChange={(e) => setDocumentType(e.target.value.toLowerCase())}
+              onClear={() => setDocumentType("")}
+            />
             <MultiSelect
-    options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
-    selected={selectedLanguages}
-    onChange={setSelectedLanguages}
-  />
-          <button
-            className="border border-blue-300 bg-blue-50 rounded-md px-3 text-blue-600"
-            onClick={clearFilters}
-          >
-            Clear All
-          </button>
-        </div>
-        <div>
-        <Button onClick={() => navigate("/add-brand-treasury")}>Add</Button>
-        </div>
+              options={LANGUAGES.map(lang => ({ value: lang, label: lang }))}
+              selected={selectedLanguages}
+              onChange={setSelectedLanguages}
+            />
+            <button
+              className="border border-blue-300 bg-blue-50 rounded-md px-3 text-blue-600"
+              onClick={clearFilters}
+            >
+              Clear All
+            </button>
+          </div>
+          <div>
+            <Button onClick={() => navigate("/add-brand-treasury")}>Add</Button>
+          </div>
         </div>
 
 
@@ -126,8 +128,8 @@ const BrandTreasuryList = () => {
           {loading
             ? Array.from({ length: 4 }, (_, i) => <BrandCard key={i} loading />)
             : documents.length > 0
-            ? documents.map((doc) => <BrandCard key={doc._id} document={doc} />)
-            : <p>No documents found.</p>
+              ? documents.map((doc) => <BrandCard key={doc._id} document={doc} />)
+              : <p>No documents found.</p>
           }
         </div>
 
@@ -139,19 +141,19 @@ const BrandTreasuryList = () => {
       <div className="bg-white shadow-md w-[220px]">
         <button
           className={`flex gap-2 items-center py-2 px-3 text-lg ${starred ? "text-red-500" : ""}`}
-          onClick={() => { setStarred(true); setMyDocuments(false);  setPage(1); }}
+          onClick={() => { setStarred(true); setMyDocuments(false); setPage(1); }}
         >
           <FiStar size={24} /> Starred
         </button>
         <button
           className={`flex gap-2 items-center py-2 px-3 text-lg ${myDocuments ? "text-red-500" : ""}`}
-          onClick={() => { setMyDocuments(true); setStarred(false);  setPage(1);}}
+          onClick={() => { setMyDocuments(true); setStarred(false); setPage(1); }}
         >
           <FiStar size={24} /> My Documents
         </button>
         <button
           className="flex gap-2 items-center py-2 px-3 text-lg"
-          onClick={() => { setMyDocuments(false); setStarred(false);  setPage(1); }}
+          onClick={() => { setMyDocuments(false); setStarred(false); setPage(1); }}
         >
           <FiStar size={24} /> All Documents
         </button>

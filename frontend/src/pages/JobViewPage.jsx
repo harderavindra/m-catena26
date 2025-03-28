@@ -13,6 +13,8 @@ import AssignToDropdown from "../components/common/AssignToDropdown";
 import StatusMessageWrapper from "../components/common/StatusMessageWrapper";
 import PageTitle from "../components/common/PageTitle";
 import FileIcon from "../components/common/FileIcon";
+import axiosInstance from "../utils/axiosInstance";
+
 const getPriorityColor = (priority) => {
     const priorityMap = {
         urgent: "error",
@@ -88,15 +90,9 @@ const JobViewPage = () => {
     useEffect(() => {
         const fetchJob = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/jobs/${fileId}`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                });
+                const response = await axiosInstance.get(`/api/jobs/${fileId}`);
 
-                if (!response.ok) throw new Error("Failed to fetch job details");
-
-                const data = await response.json();
+                const data = response.data;
                 console.log(data)
                 setJob(data);
                 const combinedHistory = [...data.decisionHistory, ...data.statusHistory].sort(
@@ -104,7 +100,8 @@ const JobViewPage = () => {
                 );
                 setMergedHistory(combinedHistory);
             } catch (err) {
-                setError(err.message);
+                console.error("Error fetching job:", err);
+                setError(err.response?.data?.message || "Failed to fetch job details");
             } finally {
                 setLoading(false);
             }

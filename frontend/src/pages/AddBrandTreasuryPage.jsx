@@ -7,6 +7,7 @@ import { snakeToCapitalCase } from "../utils/convertCase";
 import { fetchAllProducts, fetchBrandByProductId, fetchModelCategoriesByBrand } from '../api/masterDataApi';
 import FileIcon from "../components/common/FileIcon";
 import { FiUploadCloud } from "react-icons/fi";
+import axiosInstance from "../utils/axiosInstance";
 
 
 const AddBrandTreasuryPage = () => {
@@ -101,12 +102,12 @@ const AddBrandTreasuryPage = () => {
             setMessage("Generating signed URL...");
 
             // Step 1: Get Signed URL
-            const { data } = await axios.post("http://localhost:3000/api/upload/generate-signed-url", {
-                title: "Temp ",
-                fileName: file.name,
-                fileType: file.type,
-                fileSize: file.size
-            },  { withCredentials: true });
+          const { data } = await axiosInstance.post("/api/upload/generate-signed-url", {
+    title: "Temp ",
+    fileName: file.name,
+    fileType: file.type,
+    fileSize: file.size
+});
 
             const { signedUrl, fileId } = data;
 
@@ -122,14 +123,10 @@ const AddBrandTreasuryPage = () => {
 
             // Step 3: Save Document Metadata
             setMessage("Finalizing upload...");
-            await axios.post(`http://localhost:3000/api/upload/save-document`, {
+            await axiosInstance.post(`/api/upload/save-document`, {
                 fileId,
                 ...formData
-            },
-                {
-                    withCredentials: true,
-                }
-            );
+            });
 
             setMessage("Upload successful!");
 

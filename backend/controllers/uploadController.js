@@ -6,6 +6,7 @@ import StarredDocument from "../models/StarredDocument.js";
 import sharp from "sharp";
 import fs from "fs";
 import path from "path";
+import { setCorsHeaders } from "../middlewares/corsMiddleware.js";
 
 dotenv.config();
 
@@ -92,6 +93,8 @@ const bucket = storage.bucket(process.env.BUCKET_NAME);
 
 // Get Signed URL for Downloading
 export const getSignedUrl = async (req, res) => {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     try {
         const { fileId } = req.params;
         const document = await Document.findById(fileId);
@@ -113,6 +116,8 @@ export const getSignedUrl = async (req, res) => {
 
 // Get File Details, Including Thumbnail URL
 export const getBrandTreasuryById = async (req, res) => {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     try {
         const { fileId } = req.params;
          const userId = req.user._id;
@@ -168,6 +173,8 @@ export const getBrandTreasuryById = async (req, res) => {
     }
 };
 export const updateApproval = async (req, res) => {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     const { id } = req.params;
     const { approved } = req.body;
     const userId = req.user._id; // Get logged-in user ID from middleware
@@ -255,6 +262,8 @@ export const uploadThumbnail = async (req, res) => {
 
 
 export const getAllBrandTreasury = async (req, res) => {
+        setCorsHeaders(req, res); // Set CORS headers
+    
     try {
         let { page = 1, limit = 10, documentType, starred,myDocuments, search ,languages } = req.query;
         console.log(languages ,"lectedLanguages")

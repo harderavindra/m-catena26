@@ -29,8 +29,7 @@ const StatusBubbleText = ({status ='success',icon, text, size= 'sm', className})
         star: <FiStar size={sizes[size]}/>,
         check: <FiCheck size={sizes[size]}/>,
         eyeOff: <FiEyeOff size={sizes[size]}/>,
-        clock: <FiClock size={sizes[size]}/>,
-        check: <FiCheck size={sizes[size]}/>,
+        clock: <FiClock size={sizes[size]}/>, 
 
     }
    

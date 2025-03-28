@@ -20,7 +20,6 @@ const LoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     setLoading(true);
-    console.log("Login useEffect ", user)
     if (user) {
       setSuccess("Login successful! Redirecting...");
 

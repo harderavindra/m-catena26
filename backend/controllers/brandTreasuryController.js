@@ -11,6 +11,8 @@ export const createBrandTreasury = async (req, res) => {
 };
 
 export const getBrandTreasuries = async (req, res) => {
+      setCorsHeaders(req, res); // Set CORS headers
+  
   try {
     const records = await BrandTreasury.find().populate('product').populate('brand').populate('model');
     res.status(200).json({ success: true, data: records });

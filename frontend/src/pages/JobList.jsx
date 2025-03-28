@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../components/common/Button";
 import StatusMessageWrapper from "../components/common/StatusMessageWrapper";
 import PageTitle from "../components/common/PageTitle";
 import JobCard from "../components/job/JobCard";
 import LoadingCard from "../components/job/LoadingCard";
+import axiosInstance from "../utils/axiosInstance";
 
 const JobList = () => {
     const navigate = useNavigate();
@@ -21,11 +21,8 @@ const JobList = () => {
 
         const fetchJobs = async () => {
             try {
-                const { data } = await axios.get("http://localhost:3000/api/jobs", {
-                    withCredentials: true,
-                });
+                const { data } = await axiosInstance.get("/api/jobs");
                 if (isMounted) setJobs(data);
-                // console.log(data)
             } catch (error) {
                 if (isMounted) setError("Failed to load jobs.");
                 console.error("Error fetching jobs:", error);
