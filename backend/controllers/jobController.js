@@ -104,8 +104,9 @@ export const getAllJobs = async (req, res) => {
 
 
 export const getJobById = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
-    setCorsHeaders(req, res); // Set CORS headers
 
     const { id } = req.params;
 
@@ -190,6 +191,8 @@ export const getJobById = async (req, res) => {
 
 
 export const approveJob = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const { jobId } = req.params;
     const adminId = req.user._id; // Assuming user is authenticated
@@ -217,6 +220,8 @@ export const approveJob = async (req, res) => {
   }
 };
 export const updateJobStatus = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const { jobId } = req.params;
     const { status, comment, attachment } = req.body;
@@ -295,6 +300,8 @@ export const deleteJob = async (req, res) => {
 
 
 export const generateSignedUrl = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const { fileName, fileType } = req.body;
     if (!fileName || !fileType) {
@@ -331,6 +338,8 @@ export const generateSignedUrl = async (req, res) => {
 
 
 const generateSignedAttchmentUrl = async (filePath) => {
+  // setCorsHeaders(req, res); // Set CORS headers
+
   try {
     if (!filePath) return null;
     // Ensure the file path includes the `/status/` folder
@@ -396,6 +405,8 @@ export const jobassignedTo = async (req, res) => {
 
 
 export const signedUrlGCS = async (req, res) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     const { fileName, fileType } = req.body;
     if (!fileName || !fileType) {
@@ -422,6 +433,8 @@ export const signedUrlGCS = async (req, res) => {
 
 
 const generatesSignedUrlGCS = async (filePath) => {
+  setCorsHeaders(req, res); // Set CORS headers
+
   try {
     if (!filePath) return null;
 

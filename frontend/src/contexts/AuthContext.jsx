@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axiosInstance.get(`/api/auth/me`);
+        const response = await axios.get("http://localhost:3000/api/auth/me", { withCredentials: true });
         console.log("Auth Check", response.data.user)
         setUser(response.data.user);
       }  catch (error) {
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   // Login function
   const login = async (email, password) => {
-    await axiosInstance.post(`/api/auth/login`, { email, password });
+    await axios.post(`/api/auth/login`, { email, password });
     const response = await axiosInstance.get(`/api/auth/me`,);
     setUser(response.data.user);
   };

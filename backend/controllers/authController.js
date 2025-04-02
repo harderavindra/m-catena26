@@ -7,30 +7,29 @@ import { DESIGNATIONS, ROLES } from "../constants/enums.js";
 import { setCorsHeaders } from "../middlewares/corsMiddleware.js";
 
 export const login = async (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
   try {
     
     const { email, password } = req.body;
-
-
-
+    
+    
+    
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
     }
-
+    
     const user = await User.findOne({ email });
-
+    
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
+    
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
-
+    
     res.cookie("token", token, {
       httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: 'strict',
       maxAge: 3600000
@@ -45,7 +44,7 @@ export const login = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
+  
 
   try {
     const { page = 1, limit = 10, role, designation, search } = req.query;
@@ -84,9 +83,9 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getMe = async (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
   try {
-    
+    console.log( "user")
+
     const user = await User.findById(req.user.id).select("firstName lastNmae email role profilePic createdAt"); // Exclude password
     if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -97,7 +96,7 @@ export const getMe = async (req, res) => {
   }
 };
 export const logOut = (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
+  
 
   res.clearCookie("token", { httpOnly: true, secure: process.env.NODE_ENV === "production" });
   return res.status(200).json({ message: "Logged out successfully" });
@@ -105,7 +104,7 @@ export const logOut = (req, res) => {
 
 export const getUserById = async (req, res) => {
   console.log(req.params.id)
-  setCorsHeaders(req, res); // Set CORS headers
+ 
 
   try {
     const user = await User.findById(req.params.id).select("-password");
@@ -124,7 +123,6 @@ export const getUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   
   try {
-    setCorsHeaders(req, res); // Set CORS headers
     const userId = req.params.id;
     const { firstName, lastName, contactNumber, userType, designation, role, status, location } = req.body;
 
@@ -227,7 +225,6 @@ export const resetUserPassword = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
 
   try {
     const adminId = req.user.id; // Admin ID from token
@@ -251,7 +248,6 @@ console.log(id)
 };
 
 export const registerUser = async (req, res) => {
-  setCorsHeaders(req, res); // Set CORS headers
 
 
   try {

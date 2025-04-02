@@ -23,24 +23,24 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-        <Route path="/healthcheck" element={<HealthCheck />} />
+          <Route path="/healthcheck" element={<HealthCheck />} />
 
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
-          <Route element={<MainLayout />}>
+            <Route element={<MainLayout />}>
 
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/users" element={<UsersPage />} />
-            <Route path="/user/:id" element={<UserDetails />} />
-            <Route path="/adduser" element={<AddUser />} />
-            {/* <Route path="/brand-treasury" element={<BrandTreasuryPage />} /> */}
-            <Route path="/add-brand-treasury" element={<AddBrandTreasuryPage />} />
-            <Route path="/masterdata" element={<MasterDataPage />} />
-            <Route path="/view-brandtreasury/:fileId" element={<ViewBrandTreasuryPage />} />
-            <Route path="/brand-treasury" element={<BrandTreasuryList />} />
-            <Route path="/create-artwork" element={<JobCreate />} />
-            <Route path="/artworks" element={<JobList />} />
-            <Route path="/artwork/:fileId" element={<JobViewPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/users" element={<UsersPage />} />
+              <Route path="/user/:id" element={<UserDetails />} />
+              <Route path="/adduser" element={<AddUser />} />
+              {/* <Route path="/brand-treasury" element={<BrandTreasuryPage />} /> */}
+              <Route path="/add-brand-treasury" element={<AddBrandTreasuryPage />} />
+              <Route path="/masterdata" element={<MasterDataPage />} />
+              <Route path="/view-brandtreasury/:fileId" element={<ViewBrandTreasuryPage />} />
+              <Route path="/brand-treasury" element={<BrandTreasuryList />} />
+              <Route path="/create-artwork" element={<JobCreate />} />
+              <Route path="/artworks" element={<JobList />} />
+              <Route path="/artwork/:fileId" element={<JobViewPage />} />
             </Route>
           </Route>
           <Route path="*" element={<LoginPage />} />

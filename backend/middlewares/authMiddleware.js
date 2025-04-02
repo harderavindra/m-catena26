@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import AppUser from "../models/User.js"; // Ensure correct path
 
 const authMiddleware = async (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*"); 
   try {
     const token = req.cookies?.token || req.headers.authorization?.split(" ")[1]; // Check cookie or header
     if (!token) {
